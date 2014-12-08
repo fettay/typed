@@ -1,0 +1,29 @@
+<div class="container">
+	<div class="row profil-top">
+		<div class="col-md-6">
+			<% if(user.pic){ %>
+			<img src="<%- user.pic %>" class="pr-pic"/>
+			<% } else{ %>
+			<a href="#"><img src="/images/default.jpg" class="pr-pic"/></a>
+			<% } %>
+			<h3> <%- user.firstname+' '+user.name %> </h3>
+			<h5> <span class="highlighted"> <%- user.getPlayedGames() %> </span> Matchs Joués </h5>
+			<h5> <span class="highlighted"> <%- user.ranking %> </h5>
+		</div>
+		<div class="col-md-6">
+			<h3> Mes équipes </h3>
+			<%if(user.teams){ _.each(user.teams, function(team){ %>
+			<div class="team <% if(user.capOf==team){%> cap <%}%>">
+				<img src="<%- team.pic %>">
+				<h5> <%- team.name %> </h5>
+				<h5> <%- team.ranking %> </h5>
+			</div>
+			<% }) } else{ %>
+			<h5> Aucune Equipe </h5>
+			<%}%>
+		</div> 
+	</div>
+</div>
+
+
+
