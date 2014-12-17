@@ -137,7 +137,7 @@ p {
 }
 .slide2 {
     background: none;
-    text-align: center;
+    text-align: center;ƒ
     padding-top: 90px;
 }
 .slide2 h1 {
@@ -226,6 +226,13 @@ p {
     box-sizing: border-box;
     background: url(../images/tick.png) no-repeat left;
 }
+.team_page{
+    padding-top: 50px;
+}
+.players{
+    padding-top: 30px;
+    padding-left: 30px;
+}
 .Testimonials p {
     margin-top: 10px;
 }
@@ -250,6 +257,37 @@ p {
     -ms-transition: all 0.6s ease;
     -o-transition: all 0.6s ease;
     transition: all 0.6s ease;
+}
+.profil-bottom{
+    margin-top: 80px;
+}
+.results{
+    height:25px;
+}
+.error-msg p{
+    color: #ff0000;
+    text-align: center;
+}
+.scores{
+    display:inline;
+}
+.victory{
+    color:#42d87b;
+}
+.defeat{
+    color:#fe0c00;
+}
+.nmatch-date{
+    text-decoration: underline;
+    padding-right: 10px;
+    font-weight: bold;
+}
+.nmatch-place{
+    padding-left: 10px;
+    font-weight: bold;
+}
+.add_p{
+    float:right;
 }
 @media (min-width:767px)  {
     .Testimonials .tm-data: hover {

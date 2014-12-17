@@ -1,29 +1,181 @@
+ <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse"> <span class="sr-only">Toggle navigation</span> <span class="icon-bar"></span> <span class="icon-bar"></span> <span class="icon-bar"></span> </button>
+          <a class="navbar-brand" href="index.html"> <img src="/images/LF5-logo.png" alt="logo"></a> </div> 
+          <div class="collapse navbar-collapse navbar-ex1-collapse">
+            <ul class="nav navbar-nav navbar-right">
+              <li class="active"><a href="/session/new">MON PROFIL</a></li>
+              <li class="hidden-sm"><a href="testimonials.html">CLASSEMENTS</a></li>
+              <li><a href="pricing.html">MATCH FINDER</a></li>
+              <li class="dropdown"> <a href="/actu">ACTUS</a>
+              <li><a href="contact.html">CONTACT</a></li>
+              <li><a href="/session/logout" role="button" class="btn btn-danger">Log out</a></li> 
+            </ul>
+          </li>
+        </ul>
+      </div>
+
+    </div>
+</nav>
 <div class="container">
 	<div class="row profil-top">
-		<div class="col-md-6">
+		<div class="col-md-4">
+			<h1> <%- user.toString() %> </h1>
+			<h5> <span class="highlighted"> <%- user.getPlayedGames() %> </span> Matchs Joués </h5>
+			<h5> <span class="highlighted"> <%- user.ranking %> </h5>
 			<% if(user.pic){ %>
 			<img src="<%- user.pic %>" class="pr-pic"/>
 			<% } else{ %>
 			<a href="#"><img src="/images/default.jpg" class="pr-pic"/></a>
 			<% } %>
-			<h3> <%- user.firstname+' '+user.name %> </h3>
-			<h5> <span class="highlighted"> <%- user.getPlayedGames() %> </span> Matchs Joués </h5>
-			<h5> <span class="highlighted"> <%- user.ranking %> </h5>
 		</div>
-		<div class="col-md-6">
+		<div class="col-md-4">
 			<h3> Mes équipes </h3>
-			<%if(user.teams){ _.each(user.teams, function(team){ %>
+			<%if(user.teams && user.teams.length>0){ _.each(user.getTeams(), function(team){ %>
 			<div class="team <% if(user.capOf==team){%> cap <%}%>">
-				<img src="<%- team.pic %>">
+				<% if(team.pic){ %>
+				<img class="pic-small" src="<%- team.pic %>"/>
+				<%} else{%>
+				<img class="pic-small" src="/images/default.jpg"/>
+				<% } %>
 				<h5> <%- team.name %> </h5>
-				<h5> <%- team.ranking %> </h5>
+				<h5> <%- team.rankingG() %> </h5>
 			</div>
 			<% }) } else{ %>
-			<h5> Aucune Equipe </h5>
+			<p> Aucune Equipe </p>
+			<a class="btn btn-primary btn-small" href="/team/new">Créez la votre </a>
 			<%}%>
 		</div> 
+		<div class="col-md-4">
+			<h3> Derniers messages </h3>
+			<%if(user.messages){ _.each(user.messages, function(message){ %>
+			<h5> <%- message.from %></h5>
+			<p> <%- message.content%> </p>
+			<a class="btn btn-primary btn-small" href="#"> Repondre </a>
+			<% }) } else{%>
+			<p> Aucun Message </p>
+			<a class="btn btn-primary btn-small" href="#"> Ecrire un message </a>
+			<% }%>
+		</div>
+
+	</div>
+	<div class="row profil-bottom">
+		<div class="col-md-4">
+			<table class="table">
+			<h3> Mes stats </h3>
+			<tr>
+				<th>Durée </th>
+				<th>Matchs Joués</th>
+				<th>Victoire</th>
+				<th>Buts</th>
+			</tr>
+			<tr>
+				<td>Jour</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Mois</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			<tr>
+				<td>Années</td>
+				<td></td>
+				<td></td>
+				<td></td>
+			</tr>
+			</table>
+			<a class="btn btn-primary btn-small" href="#"> Tous les stats </a>
+		</div>
+		<div class="col-md-4">
+			<h3> Derniers résultats </h3>
+			<div>
+			<img class="results" src="/images/victoire.jpg"/>
+			<p class="scores"> <em>New team</em> 3-0 Salope  </p>
+		    </div>
+		    <div>
+			<img class="results" src="/images/defaite.jpg"/>
+			<p class="scores"> New team 0-3 Salopes </p>
+		</div>
+
+		</div>
+		<div class="col-md-4">
+			<h3> Prochains matchs </h3>
+			<div>
+				<p> <span class="nmatch-date">21/05/15</span> <span class="nmatch-team"> New-Team - Salope </span>  <span class="nmatch-place"> Urban Asnieres </span>  </p>
+			</div>
+		</div>
+
+
 	</div>
 </div>
+</div>
+    <div class="footer">
+      <div class="container">
+        <div class="row footerlinks">
+          <div class="col-sm-4 col-md-2">
+            <p>CALL US</p>
+            <ul>
+              <li> +1 4528 254 247</li>
+              <li>+1 4002 188 355</li>
+            </ul>
+          </div>
+          <div class="col-sm-4 col-md-2">
+            <p>FOLLOW US</p>
+            <ul>
+              <li><a href="http://twitter.com/surjithctly" target="_blank">Follow on Twitter</a></li>
+              <li><a href="http://web3canvas.com" target="_blank">Like us on Facebook</a></li>
+              <li><a href="http://surjithctly.in" target="_blank">Join on Linkedin</a> </li>
+            </ul>
+          </div>
+          <div class="col-sm-4 col-md-2">
+            <p>COMPANY</p>
+            <ul>
+              <li> <a href="#">About us</a></li>
+              <li><a href="#">Latest from Blog</a></li>
+              <li><a href="#">Our Team</a></li>
+            </ul>
+          </div>
+          <div class="col-sm-4 col-md-2">
+            <p>EMAIL US</p>
+            <ul>
+              <li><a href="../../../cdn-cgi/l/email-protection/index.html#b7c4c2c7c7d8c5c3f7dad6dedb99ded9" target="_blank"><span class="__cf_email__" data-cfemail="01727471716e7375416c60686d2f626e6c">[email&nbsp;protected]</span><script type="text/javascript">
+              /* <![CDATA[ */
+              (function(){try{var s,a,i,j,r,c,l,b=document.getElementsByTagName("script");l=b[b.length-1].previousSibling;a=l.getAttribute('data-cfemail');if(a){s='';r=parseInt(a.substr(0,2),16);for(j=2;a.length-j;j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}s=document.createTextNode(s);l.parentNode.replaceChild(s,l);}}catch(e){}})();
+              /* ]]> */
+            </script></a></li>
+            <li><a href="../../../cdn-cgi/l/email-protection/index.html#7a171b13163a171b1316541314" target="_blank"><span class="__cf_email__" data-cfemail="daa9bbb6bfa99ab7bbb3b6f4b9b5b7">[email&nbsp;protected]</span><script type="text/javascript">
+            /* <![CDATA[ */
+            (function(){try{var s,a,i,j,r,c,l,b=document.getElementsByTagName("script");l=b[b.length-1].previousSibling;a=l.getAttribute('data-cfemail');if(a){s='';r=parseInt(a.substr(0,2),16);for(j=2;a.length-j;j+=2){c=parseInt(a.substr(j,2),16)^r;s+=String.fromCharCode(c);}s=document.createTextNode(s);l.parentNode.replaceChild(s,l);}}catch(e){}})();
+            /* ]]> */
+          </script></a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4 col-md-2">
+        <p>LEGAL TERMS</p>
+        <ul>
+          <li><a href="#">Terms of use</a></li>
+          <li><a href="#">Privacy Policy</a></li>
+        </ul>
+      </div>
+      <div class="col-sm-4 col-md-2">
+        <p>Live Chat</p>
+        <ul>
+          <li> <a href="#" class="btn btn-success btn-small">CHAT WITH US </a> </li>
+        </ul>
+      </div>
+    </div>
+    <div class="row copyright">
+      <div class="pull-right"><img src="/images/logo-footer.png" alt="logo"></div>
+      <p>Copyright &copy; 2013. Flathost Inc</p>
+    </div>
+  </div>
+</div>
+
 
 
 

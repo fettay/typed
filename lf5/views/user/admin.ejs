@@ -1,0 +1,18 @@
+<div class='admin-title'>
+     <h1> Utilisateurs <%- users.length %> inscrits. </h1>
+ </div>
+<table class='table'>
+	<tr>
+		<th>Prénom</th>
+		<th>Nom</th>
+		<th>Email</th>	
+	</tr>
+	<% _.each(users, function(user){ %>
+	<tr>
+		<td> <%- user.firstname %> </td>
+		<td> <%- user.name %> </td>
+		<td> <%- user.email %> </td>
+		<td> <a href="/user/delete/<%=user.id%>" class='btn btn-danger'> Delete </a> </td> 
+	</tr>
+	<% }) %>
+</table>

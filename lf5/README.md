@@ -1,2 +1,3 @@
 # lf5
-### a Sails application
+
+a [Sails](http://sailsjs.org) application

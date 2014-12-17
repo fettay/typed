@@ -15,6 +15,10 @@ module.exports = {
   		required: true
   	},
 
+    toString: function(){
+        return (this.firstname + ' ' + this.name) ;
+    },
+
     firstname:{
     	type:'string',
     	required: true
@@ -43,19 +47,84 @@ module.exports = {
     	minLength: 2
     },
 
-    capOf:{
-    	collection: 'Team',
-        defaultsTo:""
+    getCap: function(){
+        _.each(this.teams, function(team){
+            if(team.captain.id==this.id){  // Captain of 1 team maximum
+                return team;
+            }
+        });
+        return -1;
     },
+
+    isCap:{
+         type : 'boolean',
+         defaultsTo : false
+    },
+
 
     teams:{
-    	collection: 'Team',
-        defaultsTo:""
+    	type: 'array',
+        defaultsTo : []
     },
 
+    getTeams: function(){
+    var teamsList =[];
+    _.each(teams, function(teamName){
+        Team.find(teamName, function foundUser(err, user){
+          if(err) return "ERROR"
+          if(!user) return "No captain"
+          teamsList.push(user);
+          });
+        });
+      return teamsList;
+    },         
+
     poste:{
-    	type: 'string',
-    	enum:['G','D','M','A']
+    	type: 'integer',
+        defaultsTo: 0
+    },
+    // Each figure in the integer poste represents the poste in a team.
+    // This figure has the same position in the integer that the team it represents in the array Teams.
+
+    getPoste: function(team){
+        var k= this.teams.length - this.teams.indexOf(team);
+        if (k==-1){
+            return "Erreur";
+        }
+        switch(this.poste%10^k){
+
+            case 1:
+            return "G"; 
+            break;
+
+            case 2:
+            return "D";
+            break;
+
+            case 3:
+            return "M"; 
+            break;
+
+            case 4:
+            return "A";
+            break;
+
+            case 0:
+            return "Undefined";
+            break;
+        }
+
+    
+    },
+
+    setPoste: function(post,team){
+    var k= this.teams.indexOf(team);
+    if (k==-1){
+            return "Erreur";
+        }
+    
+    this.poste= this.poste - (this.poste%10^k + post)*10^k;
+
     },
 
     goals:{
@@ -71,7 +140,7 @@ module.exports = {
     getPlayedGames: function(){
        if(this.playedGames){
        var pg = this.playedGames;
-       return pg.toString();
+       return (pg+'');
        }
        else{
         return '0';
@@ -82,6 +151,11 @@ module.exports = {
         type: 'string'
     },
 
+    messages:{
+        type: 'array',
+        defaultsTo: ""
+    },
+
 
     toJSON: function(){
         var obj= this.toObject();
@@ -90,8 +164,4 @@ module.exports = {
         return obj;
     }
 }
-
-
-    
-
 };
